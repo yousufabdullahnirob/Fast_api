@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 # Update with your actual database credentials
-SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:password@localhost/test_db"
+SQLALCHEMY_DATABASE_URL = "postgresql://postgres:Yousuf@localhost:5432/fastapi_db"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL

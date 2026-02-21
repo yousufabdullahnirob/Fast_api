@@ -8,12 +8,12 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-# Pydantic Schemas
+
 class CourseCreate(BaseModel):
     name: str
-    description: str
-    price: float
-    is_active: bool = True
+    Instructor: str
+    Duration: int
+    website: str = "N/A"
 
 class MessageCreate(BaseModel):
     text: str
@@ -35,9 +35,18 @@ def read_item(item_id: int, q: str = None):
 def read_me():
     return "Hello World"
 
+@app.get("/courses")
+def get_courses(db: Session = Depends(get_db)):
+    return db.query(models.Course).all()
+
 @app.post("/courses")
 def create_course(course: CourseCreate, db: Session = Depends(get_db)):
-    db_course = models.Course(name=course.name, description=course.description, price=course.price, is_active=course.is_active)
+    db_course = models.Course(
+        name=course.name, 
+        Instructor=course.Instructor, 
+        Duration=course.Duration,
+        website=course.website
+    )
     db.add(db_course)
     db.commit()
     db.refresh(db_course)
